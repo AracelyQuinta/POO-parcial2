@@ -10,6 +10,7 @@ class Producto:
         self._cantidad = cantidad
         self._precio=precio
 
+    #getters
     def getid (self):
         return self.id
 
@@ -22,6 +23,8 @@ class Producto:
 
     def getprecio(self):
         return self._precio
+
+    #setters con validacion
 
     def setcantidad(self, nueva_cantidad):
         if nueva_cantidad > 0:
