@@ -4,7 +4,7 @@ from producto import Producto
 
 class Archivo:
     def __init__(self, productos=None):
-        self.productos =[]
+        self.productos =self.productos = productos if productos else []
 
     def guardar_en_excel_xlsx(self, nombre_archivo):
         try:
@@ -45,7 +45,7 @@ class Archivo:
                 precio = float(ws.cell(row=fila, column=4).value)
 
                 productos_leidos = Producto(id_, nombre, cantidad, precio)
-                self.productos = productos_leidos
+                self.productos.append(productos_leidos)
 
     def leer_archivo(ruta):
         try:
