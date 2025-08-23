@@ -6,6 +6,7 @@ Este sistema permite al usuario:
 - Interactuar mediante un menú en consola, con opciones claras y control manual.
 
 El programa se ejecuta asi:
+
 <img width="950" height="609" alt="image" src="https://github.com/user-attachments/assets/38fd9a70-5d13-4e03-bd9c-8bdb37afe095" />
 
 Cabe recalcar que al terminar de añadir productos podras ver toda la informacion que has guardado en excel:
