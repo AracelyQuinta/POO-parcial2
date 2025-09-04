@@ -1,0 +1,26 @@
+CATÁLOGO DE LIBROS
+CATÁLOGO DE LIBROS
+----------------------------------------------------------------------------------------------------
+| TÍTULO                         | AUTOR                     | CATEGORÍA             | ISBN              | OBSERVACIÓN     |
+----------------------------------------------------------------------------------------------------
+| El código Da Vinci             | Dan Brown                 | Thriller histórico    | 978-84-08-06313-3 |                 |
+| Cien años de soledad           | Gabriel García Márquez    | Realismo mágico       | 978-84-376-0494-7 |                 |
+| El Principito                  | Antoine de Saint-Exupéry  | Fábula filosófica     | 978-84-376-0493-0 |                 |
+| Don Quijote de la Mancha       | Miguel de Cervantes       | Novela clásica         | 978-84-376-0492-3 |                 |
+| El Alquimista                  | Paulo Coelho              | Ficción espiritual     | 978-84-08-03793-6 |                 |
+| La sombra del viento           | Carlos Ruiz Zafón         | Misterio histórico     | 978-84-08-05364-6 |                 |
+| El hombre en busca de sentido  | Viktor Frankl             | Psicología / Memorias  | 978-84-254-1627-4 |                 |
+| Piense y hágase rico           | Napoleon Hill             | Autoayuda / Finanzas   | 978-84-9734-066-7 |                 |
+| Orgullo y prejuicio            | Jane Austen               | Romance clásico        | 978-84-339-7882-5 |                 |
+| 1984                           | George Orwell             | Distopía política      | 978-84-339-7883-2 |                 |
+| Crónica de una muerte anunciada| Gabriel García Márquez    | Novela corta           | 978-84-376-0495-4 |                 |
+| Los juegos del hambre          | Suzanne Collins           | Ciencia ficción juvenil| 978-84-08-09348-2 |                 |
+| El nombre del viento           | Patrick Rothfuss          | Fantasía épica         | 978-84-08-08650-7 |                 |
+| La ladrona de libros           | Markus Zusak              | Ficción histórica      | 978-84-08-08856-3 |                 |
+| El psicoanalista               | John Katzenbach           | Thriller psicológico   | 978-84-08-06794-0 |                 |
+| La chica del tren              | Paula Hawkins             | Suspenso contemporáneo | 978-84-08-14499-3 |                 |
+| El silencio de los corderos    | Thomas Harris             | Thriller criminal      | 978-84-08-06795-7 |                 |
+| El retrato de Dorian Gray      | Oscar Wilde               | Filosofía / Fantasía   | 978-84-376-0496-1 |                 |
+| El club de la pelea            | Chuck Palahniuk           | Ficción transgresiva   | 978-84-08-06796-4 |                 |
+| El diario de Ana Frank         | Ana Frank                 | Testimonio histórico   | 978-84-08-06797-1 |                 |
+----------------------------------------------------------------------------------------------------
