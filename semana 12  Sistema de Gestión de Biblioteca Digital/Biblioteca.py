@@ -26,12 +26,21 @@ class Biblioteca:
 
     def mostrar_libros_guardados(self):
         """
-        Muestra todos los libros almacenados en el catálogo.
+        Muestra todos los libros almacenados en el catálogo en formato de tabla.
         """
         if self.catalogo:
-            # Imprimir información de cada libro
+            print("\nCATÁLOGO DE LIBROS")
+            print("-" * 90)
+            print("| {:<25} | {:<25} | {:<20} | {:<15} |".format("Título", "Autor", "Categoría", "ISBN"))
+            print("-" * 90)
             for libro in self.catalogo.values():
-                print(f"{libro.get_titulo()} - {libro.get_autor()} - {libro.get_categoria()} - {libro.get_ISBN()}")
+                print("| {:<25} | {:<25} | {:<20} | {:<15} |".format(
+                    libro.get_titulo(),
+                    libro.get_autor(),
+                    libro.get_categoria(),
+                    libro.get_ISBN()
+                ))
+            print("-" * 90)
         else:
             print("No hay libros en el catálogo.")
 
@@ -170,30 +179,24 @@ class Biblioteca:
             print("Entrada no válida. Debe ingresar un número.")
 
     def buscar_libros(self):
-        print("\n¿Cómo desea buscar el libro?")
-        print("1. Por título")
-        print("2. Por autor")
-        print("3. Por categoría")
-        opcion = input("Ingrese el número de su preferencia: ")
-
-        criterio = input("Ingrese el texto a buscar: ").lower()
+        """
+        Permite buscar libros por cualquier palabra en título, autor, categoría o ISBN.
+        """
+        palabra = input("Ingrese una palabra o fragmento para buscar en los libros: ").lower()
         resultados = []
-
         for libro in self.catalogo.values():
-            if opcion == "1" and criterio in libro.get_titulo().lower():
+            if (palabra in libro.get_titulo().lower() or
+                palabra in libro.get_autor().lower() or
+                palabra in libro.get_categoria().lower() or
+                palabra in libro.get_ISBN().lower()):
                 resultados.append(libro)
-            elif opcion == "2" and criterio in libro.get_autor().lower():
-                resultados.append(libro)
-            elif opcion == "3" and criterio in libro.get_categoria().lower():
-                resultados.append(libro)
-
         if resultados:
-            print("\n Libros encontrados:")
+            print("\nRESULTADOS DE LA BÚSQUEDA")
             print("-" * 90)
-            print("| {:<30} | {:<20} | {:<15} | {:<13} |".format("TÍTULO", "AUTOR", "CATEGORÍA", "ISBN"))
+            print("| {:<25} | {:<25} | {:<20} | {:<15} |".format("Título", "Autor", "Categoría", "ISBN"))
             print("-" * 90)
             for libro in resultados:
-                print("| {:<30} | {:<20} | {:<15} | {:<13} |".format(
+                print("| {:<25} | {:<25} | {:<20} | {:<15} |".format(
                     libro.get_titulo(),
                     libro.get_autor(),
                     libro.get_categoria(),
@@ -201,7 +204,7 @@ class Biblioteca:
                 ))
             print("-" * 90)
         else:
-            print(" No se encontraron libros que coincidan con el criterio.")
+            print("No se encontraron libros que coincidan con la búsqueda.")
 
     def listar_libros_prestados(self):
         id_usuario = input("Ingrese el ID del usuario: ")
@@ -270,3 +273,32 @@ class Biblioteca:
             print("-" * 110)
         else:
             print(" No hay libros prestados actualmente.")
+
+    def mostrar_usuarios(self):
+        """
+        Muestra todos los usuarios registrados en el sistema.
+        """
+        if self.usuarios:
+            print("\nUsuarios registrados:")
+            print("-" * 40)
+            print("| {:<15} | {:<20} |".format("ID", "Nombre"))
+            print("-" * 40)
+            for usuario in self.usuarios.values():
+                print("| {:<15} | {:<20} |".format(usuario.get_id(), usuario.get_nombre()))
+            print("-" * 40)
+        else:
+            print("No hay usuarios registrados.")
+
+    def dar_de_baja_usuario(self):
+        """
+        Solicita nombre e ID y elimina al usuario si existe.
+        """
+        nombre = input("Ingrese el nombre del usuario a dar de baja: ").strip()
+        id_usuario = input("Ingrese el ID del usuario a dar de baja: ").strip()
+        usuario = self.usuarios.get(id_usuario)
+        if usuario and usuario.get_nombre() == nombre:
+            del self.usuarios[id_usuario]
+            self.ids_registrados.discard(id_usuario)
+            print(f"Usuario '{nombre}' con ID '{id_usuario}' ha sido dado de baja.")
+        else:
+            print("No se encontró un usuario con ese nombre e ID.")

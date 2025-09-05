@@ -28,6 +28,7 @@ class GuardarT:
         Formato: ISBN;TITULO;AUTOR;CATEGORIA
         """
         with open("datos_guardados/libros.txt", "w", encoding="utf-8") as archivo:
+            archivo.write("ISBN;TITULO;AUTOR;CATEGORIA\n")  # Escribe el encabezado
             for libro in self.catalogo.values():
                 archivo.write(f"{libro.get_ISBN()};{libro.get_titulo()};{libro.get_autor()};{libro.get_categoria()}\n")
 
@@ -36,29 +37,34 @@ class GuardarT:
         self.guardar_libros_txt()
 
     def cargar_libros_desde_txt(self, clase_libro):
+        """
+        Carga libros desde el archivo de texto y los agrega al catálogo (diccionario).
+        """
         try:
             with open("datos_guardados/libros.txt", "r", encoding="utf-8") as archivo:
                 for linea in archivo:
                     datos = linea.strip().split(";")
-                    if len(datos) == 4:
-                        libro = clase_libro(*datos)
-                        self.catalogo.append(libro)
+                    # Ignora encabezado y líneas vacías
+                    if len(datos) == 4 and datos[0] != "ISBN" and datos[0]:
+                        libro = clase_libro(datos[1], datos[2], datos[3], datos[0])
+                        self.catalogo[datos[0]] = libro  # ISBN como clave
         except FileNotFoundError:
             pass  # No mostrar mensaje
 
     def cargar_usuarios_desde_txt(self, clase_usuario):
+        """
+        Carga usuarios desde el archivo de texto y los agrega al diccionario de usuarios.
+        """
         try:
             with open("datos_guardados/usuarios.txt", "r", encoding="utf-8") as archivo:
                 for linea in archivo:
-                    # Ignorar encabezados y líneas que no contienen datos
-                    if linea.startswith("|"):
-                        datos = linea.strip().split("|")
-                        # El formato es: | ID | NOMBRE | LIBROS PRESTADOS |
-                        if len(datos) >= 2 and datos[0] != "ID":
-                            id_usuario = datos[0]
-                            nombre = datos[1]
-                            usuario = clase_usuario(nombre, id_usuario)
-                            self.usuarios[id_usuario] = usuario
+                    datos = linea.strip().split(";")
+                    # Ignora encabezado y líneas vacías
+                    if len(datos) >= 2 and datos[0] != "ID" and datos[0]:
+                        id_usuario = datos[0]
+                        nombre = datos[1]
+                        usuario = clase_usuario(nombre, id_usuario)
+                        self.usuarios[id_usuario] = usuario
         except FileNotFoundError:
             pass  # No mostrar mensaje
 

@@ -1,4 +1,3 @@
-ID;NOMBRE;
 cf6b959f;aranza25;
 70f3a46b;mark28;
 a1b2c3d4;lucas17;

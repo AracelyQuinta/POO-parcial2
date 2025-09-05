@@ -23,9 +23,8 @@ def mostrar_menu(registro_habilitado):
     print("6. Buscar libros")
     print("7. Listar libros prestados por usuario")
     print("8. Mostrar estado general de libros")
-    print("9. Generar reportes")
-    print("10. Guardar datos manualmente")
-    print("11. Dar de baja usuario")
+    print("9. Generar reporte")
+    print("10. Dar de baja usuario")
     print("0. Salir")
 
 def ejecutar_menu():
@@ -39,27 +38,24 @@ def ejecutar_menu():
     reporteador = Reporte(biblioteca.usuarios, biblioteca.catalogo)
 
     print("\nBienvenido al Sistema de Gestión Bibliotecaria")
-    registro_habilitado = False
+    usuario_actual = None
 
     while True:
-        respuesta = input("¿Usted posee un usuario registrado en el sistema? (sí/no): ").strip().lower()
+        respuesta = input("¿Usted posee un usuario registrado en el sistema? (si/no): ").strip().lower()
         if respuesta == "no":
             print("\nDebe registrar un usuario para continuar.")
             biblioteca.registro_de_usuario()
             persistencia.guardar_usuarios_txt()
-            print("Usuario registrado correctamente. Accediendo al sistema...")
-            registro_habilitado = True
+            # Autenticación automática con el último usuario registrado
+            usuario_actual = list(biblioteca.usuarios.values())[-1]
+            print(f"¡Ingreso al sistema como '{usuario_actual.get_nombre()}' (ID: {usuario_actual.get_id()})!")
             break
-        elif respuesta == "sí":
+        elif respuesta == "si":
             nombre = input("Ingrese su nombre de usuario: ").strip()
-            id_usuario = input("Ingrese su ID de usuario: ").strip()
-            usuario_encontrado = any(
-                u.get_nombre() == nombre and u.get_id() == id_usuario
-                for u in biblioteca.usuarios.values()
-            )
-            if usuario_encontrado:
-                print("Usuario encontrado. Accediendo al sistema...")
-                registro_habilitado = True
+            id_usuario_actual = input("Ingrese su ID de usuario: ").strip()
+            usuario_actual = biblioteca.usuarios.get(id_usuario_actual)
+            if usuario_actual and usuario_actual.get_nombre() == nombre:
+                print(f"¡Ingreso al sistema como '{nombre}' (ID: {id_usuario_actual})!")
                 break
             else:
                 print("Ups, ingreso algo mal. No se encuentra registrado.")
@@ -71,8 +67,8 @@ def ejecutar_menu():
                     if registrar == "sí":
                         biblioteca.registro_de_usuario()
                         persistencia.guardar_usuarios_txt()
-                        print("Usuario registrado correctamente. Accediendo al sistema...")
-                        registro_habilitado = True
+                        usuario_actual = list(biblioteca.usuarios.values())[-1]
+                        print(f"¡Ingreso al sistema como '{usuario_actual.get_nombre()}' (ID: {usuario_actual.get_id()})!")
                         break
                     else:
                         print("Saliendo del sistema. Que tenga un buen día.")
@@ -81,8 +77,9 @@ def ejecutar_menu():
             print("Respuesta inválida. El sistema se cerrará por seguridad.")
             return
 
+    # Menú principal, usando usuario_actual
     while True:
-        mostrar_menu(registro_habilitado)
+        mostrar_menu(True)
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
@@ -100,7 +97,7 @@ def ejecutar_menu():
                     print(f"Error al agregar libro: {e}")
 
                 print("\n¿Desea añadir otro libro?")
-                print("1. Sí")
+                print("1. Si")
                 print("2. No, volver al menú")
                 print("3. Salir del sistema")
                 siguiente = input("Seleccione una opción: ")
@@ -110,6 +107,7 @@ def ejecutar_menu():
                 elif siguiente == "2":
                     break
                 elif siguiente == "3":
+                    persistencia.guardar_todo_txt()
                     print("Gracias por usar el sistema.")
                     return
                 else:
@@ -143,11 +141,18 @@ def ejecutar_menu():
             reporteador.menu_reportes()
 
         elif opcion == "10":
-            biblioteca.dar_de_baja_usuario()
-            persistencia.guardar_todo_txt()
+            # Solo permite dar de baja al usuario actual
+            confirm = input(f"¿Seguro que desea darse de baja como '{usuario_actual.get_nombre()}' (ID: {usuario_actual.get_id()})? (sí/no): ").strip().lower()
+            if confirm == "si":
+                biblioteca.dar_de_baja_usuario()
+                persistencia.guardar_todo_txt()
+                print("Usuario dado de baja. Saliendo del sistema.")
+                return
+            else:
+                print("Operación cancelada.")
 
         elif opcion == "0":
-            persistencia.guardar_todo_txt()  # Guarda todo antes de salir
+            persistencia.guardar_todo_txt()
             print("Gracias por usar el sistema.")
             break
 

@@ -23,24 +23,10 @@ class Reporte:
         """
         Muestra el menú de reportes y gestiona la generación de reportes.
         """
-        print("\nMENÚ DE REPORTES")
-        print("1. Reporte de libros prestados por usuario")
-        print("2. Reporte general del catálogo")
-        print("3. Reporte de libros con observaciones")
-        print("4. Ver historial de exportaciones")
-        opcion = input("Seleccione una opción: ")
-
-        if opcion == "1":
-            id_usuario = input("Ingrese el ID del usuario: ")
-            self.exportar_libros_prestados(id_usuario)
-        elif opcion == "2":
-            self.exportar_catalogo()
-        elif opcion == "3":
-            self.exportar_observaciones()
-        elif opcion == "4":
-            self.ver_historial_exportaciones()
-        else:
-            print(" Opción inválida.")
+        print("\nREPORTE GENERAL DE LA BIBLIOTECA")
+        print(f"Total de usuarios registrados: {len(self.usuarios)}")
+        print(f"Total de libros en catálogo: {len(self.catalogo)}")
+        # Puedes agregar más reportes aquí
 
     def generar_reporte_libros_prestados(self, id_usuario):
         if id_usuario not in self.usuarios:
