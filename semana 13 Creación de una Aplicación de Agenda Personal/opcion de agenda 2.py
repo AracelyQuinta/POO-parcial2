@@ -6,12 +6,63 @@ import os
 # Crear ventana principal
 ventana = tk.Tk()
 ventana.title("Agenda")
-ventana.geometry("500x300")
+ventana.geometry("550x400")
 ventana.attributes("-alpha", 0.9)
 ventana.config(bg="Black")
 
+
+modo_oscuro = True  # Estado inicial
+
+colores = {
+    "oscuro": {
+        "bg": "black",
+        "fg": "white",
+        "boton_bg": "black",
+        "boton_fg": "yellow",
+        "tabla_bg": "white",
+        "tabla_fg": "black",
+        "encabezado_bg": "darkblue",
+        "encabezado_fg": "white"
+    },
+    "claro": {
+        "bg": "white",
+        "fg": "black",
+        "boton_bg": "lightgray",
+        "boton_fg": "blue",
+        "tabla_bg": "#f0f0f0",
+        "tabla_fg": "black",
+        "encabezado_bg": "skyblue",
+        "encabezado_fg": "black"
+    }
+}
+
+def cambiar_modo():
+    global modo_oscuro
+    modo_oscuro = not modo_oscuro
+    tema = "oscuro" if modo_oscuro else "claro"
+    c = colores[tema]
+
+    ventana.config(bg=c["bg"])
+    etiqueta.config(bg=c["bg"], fg=c["fg"])
+
+    frame_eventos.config(bg=c["bg"])
+    label_vacio.config(bg=c["bg"], fg="red")
+
+    style.configure("Treeview", background=c["tabla_bg"], foreground=c["tabla_fg"], fieldbackground=c["tabla_bg"])
+    style.configure("Treeview.Heading", background=c["encabezado_bg"], foreground=c["encabezado_fg"])
+
+    for btn in [btn_agregar, btn_eliminar, btn_salir, btn_modo]:
+        btn.config(bg=c["boton_bg"], fg=c["boton_fg"])
+
 etiqueta = tk.Label(ventana, text="Bienvenido a su agenda", fg="white", bg="Black", font=("Arial", 12, "italic"))
 etiqueta.pack()
+
+frame_botones = tk.Frame(ventana)
+frame_botones.pack(pady=10)
+
+btn_modo = tk.Button(frame_botones, text="Modo Claro/Oscuro", command=cambiar_modo)
+btn_modo.config(fg="yellow", bg="black", font=("Arial", 7, "bold"))
+btn_modo.grid(row=0, column=0, padx=1)
 
 # Crear estilo personalizado de la tabla
 style = ttk.Style()
@@ -33,6 +84,7 @@ tree.pack()
 
 # Etiqueta de vacío (se mostrará si no hay eventos)
 label_vacio = tk.Label(frame_eventos, text="No tiene nada registrado", fg="red", font=("Arial", 10, "bold"))
+
 
 # Función para cargar eventos desde archivo
 def cargar_eventos():
@@ -61,6 +113,7 @@ def añadir_evento():
     #ventana.wait_window(ventana1)
 
 
+
     frame_entrada = tk.Frame(ventana1)
     frame_entrada.pack(pady=10)
 
@@ -86,6 +139,13 @@ def añadir_evento():
         if not fecha or not hora or not descripcion:
             messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos.")
             return
+
+        # Verificar si ya existe un evento con la misma fecha y hora
+        for item in tree.get_children():
+            valores = tree.item(item)["values"]
+            if fecha == valores[0] and hora == valores[1]:
+                messagebox.showerror("Conflicto de horario", f"Ya existe un evento registrado el {fecha} a las {hora}.")
+                return
 
         if label_vacio.winfo_ismapped():
             label_vacio.pack_forget()
