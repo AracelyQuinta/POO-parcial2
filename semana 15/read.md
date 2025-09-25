@@ -7,9 +7,14 @@ Esta aplicación de escritorio, desarrollada en Python con Tkinter, permite gest
 
 ## - Permite Añadir nuevas tareas y eliminar tareas existentes
 
+<img width="289" height="187" alt="image" src="https://github.com/user-attachments/assets/df1f8176-a014-4a75-9425-f3caf844398b" />
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
 <img width="608" height="424" alt="image" src="https://github.com/user-attachments/assets/0284cc05-850a-4ff4-a32d-b116e0af9a60" />
 
-<img width="289" height="187" alt="image" src="https://github.com/user-attachments/assets/df1f8176-a014-4a75-9425-f3caf844398b" />
+
+
 
 
 # -Al eliminar tareas se muestra asi:
