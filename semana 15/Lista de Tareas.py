@@ -85,7 +85,11 @@ def mas_acciones():
                 else:
                     messagebox.showwarning("Advertencia", "Seleccione una tarea para eliminar.")
 
-            tk.Button(frame_dinamico, text="Eliminar", command=eliminar).pack(pady=5)
+            botones_frame = tk.Frame(frame_dinamico)
+            botones_frame.pack(pady=5)
+
+            tk.Button(botones_frame, text="Eliminar", command=eliminar).pack(side="left", padx=10)
+            tk.Button(botones_frame, text="Cancelar", command=ventana1.destroy).pack(side="left", padx=10)
 
     # Detecta cuando se cambia la opción del combobox
     combo_accion.bind("<<ComboboxSelected>>", mostrar_opciones)
